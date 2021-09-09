@@ -10,8 +10,7 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
       - run: npm ci
-      # force update the webdriver
-      - run: cd ./node_modules/protractor && npm i webdrivermanager@latest
+      
       # because we use "npm ci" to install NPM dependencies
       # we cache "~/.npm" folder
       - save_cache:
