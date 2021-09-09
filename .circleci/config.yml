@@ -23,12 +23,14 @@ jobs:
           paths:
             - ~/.npm
 
-      - run: npm run style
-      - run: npm run lint
+      # I don't use a linter so I didn't define those scripts
+      #- run: npm run style
+      #- run: npm run lint
 
       - run: npm run build:prod
       - run: npm run test:coverage -- --watch=false
-      - run: npm run e2e
+      # I didn't define e2e tests either
+      #- run: npm run e2e
 
       - run:
           name: Tar & Gzip compiled app
