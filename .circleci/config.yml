@@ -27,6 +27,7 @@ jobs:
       #- run: npm run style
       #- run: npm run lint
 
+      # I should have this script available
       - run: npm run build:prod
       - run: npm run test:coverage -- --watch=false
       # I didn't define e2e tests either
