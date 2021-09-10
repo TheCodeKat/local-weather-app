@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment'
 
 import { ICurrentWeather } from '../interfaces';
 
-interface ICurrentWeatherData { 
+export interface ICurrentWeatherData { 
   weather: [{
     description: string,
     icon: string
