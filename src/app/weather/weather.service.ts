@@ -59,6 +59,13 @@ export class WeatherService implements IWeatherService{
       )
   }
 
+  /** The searchText could be either a postal code or a city name
+  * The resolvePostalCode() function makes a request to the API to see
+  * if the code entered by the user is a valid postal code. If it is,
+  * we'll get back the data about that postal code and we'll be able to getCurrentWeatherByCoords().
+  * If it wasn't a valid postal code, e.g the API didn't return any results, we assume that the user entered
+  * a city name instead and we perform a request to the Weather API.
+  */
   getCurrentWeather(searchText: string, country?: string): Observable<ICurrentWeather> {
     return this.postalCodeService.resolvePostalCode(searchText).pipe(
       switchMap((postalCode) => {
