@@ -5,7 +5,9 @@
 export const environment = {
   production: false,
   appId: '93075f8dca9024012699c57b4c651bec',
-  baseUrl: 'http://'
+  baseUrl: 'http://',
+  username: 'yizuhi',
+  geonamesApi: 'api'
 };
 
 /*
