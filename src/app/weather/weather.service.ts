@@ -5,7 +5,7 @@ import { map, switchMap } from 'rxjs/operators'
 import { environment } from '../../environments/environment'
 
 import { ICurrentWeather } from '../interfaces';
-import { PostalCodeService } from '../postal-code/postal-code.service';
+import { defaultPostalCode, PostalCodeService } from '../postal-code/postal-code.service';
 
 export interface ICurrentWeatherData { 
   weather: [{
@@ -60,24 +60,22 @@ export class WeatherService implements IWeatherService{
   }
 
   getCurrentWeather(searchText: string, country?: string): Observable<ICurrentWeather> {
-    return this.postalCodeService.
-      resolvePostalCode(searchText)
-      .pipe(
-        switchMap((postalCode) => {
-          if (postalCode) {
-            return this.getCurrentWeatherByCoords({
-              latitude: postalCode.lat,
-              longitude: postalCode.lng,
-            } as GeolocationCoordinates)
-          } else {
-            const uriParams = new HttpParams().set(
-              'q',
-              country ? `${searchText},${country}` : searchText
-            )
-            return this.getCurrentWeatherHelper(uriParams) 
-          }
-       })
-     )
+    return this.postalCodeService.resolvePostalCode(searchText).pipe(
+      switchMap((postalCode) => {
+        if (postalCode && postalCode !== defaultPostalCode) {
+          return this.getCurrentWeatherByCoords({
+            latitude: postalCode.lat,
+            longitude: postalCode.lng,
+          } as GeolocationCoordinates)
+        } else {
+          const uriParams = new HttpParams().set(
+            'q',
+            country ? `${searchText},${country}` : searchText
+          )
+          return this.getCurrentWeatherHelper(uriParams)
+        }
+      })
+    )
   }
 
   getCurrentWeatherByCoords(coords: GeolocationCoordinates): Observable<ICurrentWeather> {
